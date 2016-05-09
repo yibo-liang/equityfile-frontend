@@ -1,0 +1,342 @@
+<div class="ui page centered grid" ng-show="loading && !failedLoading">
+	<div class="ui row">
+	</div>
+	<div class="ui row">
+		<div class="ui center aligned column">
+			<h2 class="ui top attached header">
+			  Loading...
+			</h2>
+			<div class="ui attached segment">
+			  <p>Loading data...</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-show="!loading && !failedLoading" ng-controller="investorProfileController">
+	<div class="ui center aligned grid">
+		<div class="fourteen wide column">
+			<h1 class="ui header">
+				<span ng-show="contact.id==currentUser.userId">My</span>
+				<span ng-hide="contact.id==currentUser.userId">{{contact.firstname}}'s</span> 
+				Profile 
+				<br/>
+				<a class="mini ui blue button" ng-if="!(contact.id==currentUser.userId)" ui-sref="investorProfile({ param1: null })">
+					<i class="reply icon"></i>
+					Back
+				</a>
+				<div class="sub header">
+					<small>	This page is up to date as of {{updateTime | date:'medium'}}</small>
+					<div ng-if="firstTime == true" class="ui yellow segment"> You have not changed your password or updated your profile, please take some time to do these things</div>
+				</div>
+			</h1>
+			<div class="ui grid three column">
+				<div class="row">
+					<div class="column five wide">
+						<form class = "ui error form" name = "companyForm" ng-submit="updateCompany(company)" novalidate>
+						<div class="ui error message" ng-if="companyErrors[0]">
+					    	<div class="header">Error Saving</div>
+					   	 	<p>There are some errors in your edit, please see red error messages for info</p>
+					  	</div>
+						<h3 class="ui top attached segment">Company Info</h3>
+							<div class="ui attached segment form">
+								<div class="field">
+									<label>Name:</label>
+									<input class="ui small input" type="text" ng-model="company.name" placeholder="Name" readonly></input>
+								</div>
+								<div id="locationField" ng-class="companyErrors[1] && 'error' || ''" class="field">
+								  <label>Company Address:</label>
+								  <input ng-show="editing[0]" class="ui input" id="autocomplete" ng-keydown = "repositionSuggestions(0)" ng-focus="repositionSuggestions(0)"placeholder="Enter your address" type="text" ng-model="autocomplete"></input>
+								  <span class = "redError" ng-show="companyErrors[1]">Please enter a valid address</span>
+								</div>
+								<div class="suggestionTest" id="suggestions0"></div>
+									<div class="field">
+										<input name="company_address_line_1" ng-model="company.address_line_1" placeholder="Address..." type="text" required readonly>
+									</div>
+									<div class="field">
+										<input name="company_city" ng-model="company.city" placeholder="City..." type="text" required readonly>
+									</div>
+									<div class="field">
+										<input name="company_post_code" ng-model="company.postcode" placeholder="Post Code..." type="text" required readonly>
+									</div>
+									<div class="field">
+										 <select name="company_country" ng-model="company.country" ng-options="country.country for country in countries" required disabled>
+										 	<option value="">Select Country...</option>
+										 </select>
+									</div>
+								<!-- <div ng-class="companyErrors[1] && 'error' || ''" class="field">
+									<label>Address:</label>
+									<input type="text" placeholder="Address Line 1" ng-model="company.address_line_1" ng-readonly="!editing[0]"></input>
+									<span class = "redError" ng-show="companyErrors[1]">Address Line 1 is required or is currently invalid</span>
+									<input type="text" placeholder="Address Line 2" ng-model="company.address_line_2" ng-show="company.address_line_2 != null && company.address_line_2 != '' || editing[0]" ng-readonly="!editing[0]"></input>
+									<input type="text" placeholder="Address Line 3" ng-model="company.address_line_3" ng-show="company.address_line_3 != null && company.address_line_3 != '' || editing[0]" ng-readonly="!editing[0]"></input>
+								</div>
+								<div ng-class="companyErrors[6] && 'error' || ''" class="field">
+									<label>City:</label>
+									<input type="text" placeholder="City" ng-model="company.city" ng-readonly="!editing[0]"></input>
+									<span class = "redError" ng-show="companyErrors[6]">City is required or is currently invalid</span>
+								</div>
+								<div ng-class="companyErrors[2] && 'error' || ''" class="field">
+									<label>Postcode:</label>
+									<input type="text" placeholder="Postcode" ng-model="company.postcode" ng-readonly="!editing[0]"></input>
+									<span class = "redError" ng-show="companyErrors[2]">Postcode is required or is currently invalid</span>
+								</div>
+								<div ng-class="companyErrors[7] && 'error' || ''" class="field">
+									<label>Country:</label>
+									 <select ng-disabled="!editing[0]" name="company_country" ng-model="company.country" ng-options="country.country for country in countries" required>
+									 	<option value="">Select Country...</option>
+									 </select>
+									 <span class = "redError" ng-show="companyErrors[7]">Please select a country</span>
+								</div> -->
+								<div ng-if="editing[0]" class="field">
+									<label>Currency:</label>
+									<select ng-change="setCurrencyIcon(company.currency)" ng-init="somethingHere = options[0]" ng-model="company.currency" ng-options="currency for currency in currencies"></select>
+								</div>
+								<div ng-class="companyErrors[3] && 'error' || ''" class="field">
+									<label>Total Assets Under Management (million):</label>
+									<div class="ui right labeled left icon input">
+										<i class="{{currencyIcon}} icon"></i>
+										<input type="number" min="0" step="any" ng-model="company.assets" ng-readonly="!editing[0]"></input>
+									</div>
+										<span class = "redError" ng-show="companyErrors[3]">Needs to be a valid positive number</span>
+								</div>
+								<div ng-class="companyErrors[4] && 'error' || ''" class="field">
+									<label>Total Equity Assets Under Management (million):</label>
+									<div class="ui right labeled left icon input">
+										<i class="{{currencyIcon}} icon"></i>
+										<input type="number" min="0" step="any" ng-model="company.equity_assets" ng-readonly="!editing[0]"></input>
+									</div>
+										<span class = "redError" ng-show="companyErrors[4]">Needs to be a valid positive number</span>
+								</div>
+								<div ng-class="companyErrors[5] && 'error' || ''" class="field">
+									<label>Total UK Equity Assets Under Management (million):</label>
+									<div class="ui right labeled left icon input">
+										<i class="{{currencyIcon}} icon"></i>
+										<input type="number" min="0" step="any" ng-model="company.uk_equity_assets" ng-readonly="!editing[0]"></input>
+									</div>
+									<span class = "redError" ng-show="companyErrors[5]">Needs to be a valid positive number</span>
+								</div>
+							</div>
+							<br/>
+							<div class="ui blue button" ng-show="!editing[0]" ng-click="editing[0]=!editing[0]">
+								<i class="edit icon"></i>
+								Edit info
+							</div>
+							<button type="button" class="ui green button" ng-show="editing[0]" ng-click="updateCompany(company)">
+								<i class="check icon"></i>
+								Save
+							</button>
+							<div class="ui red button" ng-show="editing[0]" ng-click="editing[0]=!editing[0]">
+								<i class="x icon"></i>
+								Cancel
+							</div>
+						</form>
+					</div>
+					<div class="column five wide">
+					<form class = "ui error form" ng-submit="update(contact)" novalidate>
+						<div class="ui error message" ng-if="detailsErrors[0]">
+					    	<div class="header">Error Saving</div>
+					   	 	<p>There are some errors in your edit, please see red error messages for info</p>
+					  	</div>
+						<h3 class = "ui top attached segment"><span ng-show="contact.id==currentUser.userId">My </span>Details</h3>
+						<div class="ui attached segment form">
+							<div ng-class="detailsErrors[2] && 'error' || ''" class="field" ng-class="{inline: !editing[1]}">
+								<label>Name: </label>
+								<input type="text" ng-show="!editing[1]" placeholder="Name" readonly value="{{contact.firstname + ' ' + contact.surname}}"></input>
+								<input type="text" ng-model="contact.firstname" ng-show="editing[1]" placeholder="First Name" ng-readonly="!editing[1]"></input>
+								<span class = "redError" ng-if="detailsErrors[2]">First name is required or is currently invalid</span>
+							</div>
+							<div ng-class="detailsErrors[3] && 'error' || ''" class="field" ng-class="{inline: !editing[1]}">
+								<input type="text" ng-model="contact.surname" ng-show="editing[1]" placeholder="Surname" ng-readonly="!editing[1]"></input>
+								<span class = "redError" ng-if="detailsErrors[3]">Second name is required or is currently invalid</span>
+							</div>
+							<div class="field">
+								<label>E-mail: </label>
+								<input type="text" ng-model="contact.email" placeholder="E-mail" readonly></input>
+							</div>
+							<div class="field">
+								<label>Position: </label>
+								<select class="ui" ng-disabled="!editing[1]" ng-model="contact.position" ng-options="position.title for position in positions">
+									<option value="">Select Position...</option>
+						 		</select>
+							</div>
+							<div ng-class="detailsErrors[1] && 'error' || ''" class="field">
+								<label>Telephone: </label>
+								<input type="text" ng-model="contact.telephone" placeholder="Telephone" ng-readonly="!editing[1]"></input>
+								<span class = "redError" ng-if="detailsErrors[1]">Telephone number is invalid</span>
+							</div>
+							<div id="locationField" ng-class="detailsErrors[5] && 'error' || ''" class="field">
+								  <label>Meeting Address:</label>
+								(Leave blank to use your company's address)</br>
+								  <input ng-show="editing[1]" class="ui input" id="autocompleteContact" ng-keydown = "repositionSuggestions(1)" ng-focus="repositionSuggestions(1)" placeholder="Enter your address" type="text" ng-model="autocompleteContact"></input>
+								  <span class = "redError" ng-show="companyErrors[1]">Please enter a valid address</span>
+								</div>
+								<div class="suggestionTest" id="suggestions1"></div>
+								<div class="field">
+										<div ng-show="editing[1]" class="ui center aligned mini blue button" ng-click="clearAddress()"> Clear </div>
+									</div>
+									<div class="field">
+										<input name="contact_address_line_1" ng-model="contact.address_line_1" placeholder="Address..." type="text" required readonly>
+									</div>
+									<div class="field">
+										<input name="contact_city" ng-model="contact.city" placeholder="City..." type="text" required readonly>
+									</div>
+									<div class="field">
+										<input name="contact_post_code" ng-model="contact.postcode" placeholder="Post Code..." type="text" required readonly>
+									</div>
+									<div class="field">
+										 <select name="contact_country" ng-model="contact.country" ng-options="country.country for country in countries" required disabled>
+										 	<option value="">Select Country...</option>
+										 </select>
+									</div>
+							<!-- <div ng-class="detailsErrors[5] && 'error' || ''" class="field">
+								<label>Meeting Address:</label>
+								Will use this address for meetings instead of company address
+								<input type="text" ng-model="contact.address_line_1" placeholder="Address Line 1" ng-readonly="!editing[1]"></input>
+								<span class = "redError" ng-if="detailsErrors[5]">Address Line 1 is required or is currently invalid</span>
+								<input type="text" ng-model="contact.address_line_2" placeholder="Address Line 2" ng-show="contact.address_line_2 != null && contact.address_line_2 != '' || editing[1]" ng-readonly="!editing[1]"></input>
+								<input type="text" ng-model="contact.address_line_3" placeholder="Address Line 3" ng-show="contact.address_line_3 != null && contact.address_line_3 != '' || editing[1]" ng-readonly="!editing[1]"></input>
+							</div>
+							<div ng-class="detailsErrors[6] && 'error' || ''" class="field">
+									<label>City:</label>
+									<input type="text" placeholder="City" ng-model="contact.city" ng-readonly="!editing[1]"></input>
+									<span class = "redError" ng-show="detailsErrors[6]">City is required or is currently invalid</span>
+							</div>
+							<div class="field">
+								<label>Postcode:</label>
+								<input type="text" ng-model="contact.postcode" placeholder="Postcode" ng-readonly="!editing[1]"></input>
+							</div>
+							<div ng-class="detailsErrors[7] && 'error' || ''" class="field">
+								<label>Country:</label>
+								 <select ng-disabled="!editing[1]" name="user_country" ng-model="contact.country" ng-options="country.country for country in countries" required>
+								 	<option value="">Select Country...</option>
+								 </select>
+								 <span class = "redError" ng-show="detailsErrors[7]">Please select a country</span>
+							</div> -->
+							<div class="ui blue button" ng-show="contact.id==currentUser.userId" ui-sref="changePassword">
+							<i class="edit icon"></i>
+							Change Password
+							</div>
+						</div>
+						<br/>
+						<div class="ui blue button" ng-show="!editing[1]" ng-click="editing[1]=!editing[1]">
+							<i class="edit icon"></i>
+							Edit info
+						</div>
+						<button type="button" class="ui green button" ng-show="editing[1]" ng-click="update(contact)">
+							<i class="check icon"></i>
+							Save
+						</button>
+						<div class="ui red button" ng-show="editing[1]" ng-click="editing[1]=!editing[1]">
+							<i class="x icon"></i>
+							Cancel
+						</div>
+					</form>
+					</div>
+					<div class="column five wide">
+					<form class = "ui error form" ng-submit="updateDetails(details)" ng-if="position=='Portfolio Manager'" novalidate>
+						<div class="ui error message" ng-if="positionErrors[0]">
+					    	<div class="header">Error Saving</div>
+					   	 	<p>There are some errors in your edit, please see red error messages for info</p>
+					  	</div>
+						<h3 class = "ui top attached segment">{{ position }} details</h3>
+						<div class="ui attached segment form">
+							<div ng-class="positionErrors[1] && 'error' || ''" class="field">
+								<label>Total equity assets you are responsible for (million): </label>
+								<div class="ui right labeled left icon input">
+										<i class="{{currencyIcon}} icon"></i>
+									<input type="number" min="0" step="any" ng-model="details.assets" ng-readonly="!editing[2]" readonly></input>
+								</div>
+								<span class = "redError" ng-show="positionErrors[1]">Needs to be a valid positive number</span>
+							</div>
+							<div class="field">
+								<label>Style Bias: </label>
+							      <span ng-repeat="x in styleBiases"> <input ng-disabled="!editing[2]" type="checkbox" ng-model="details[x.mName]"> {{x.name}} <br/></span>
+							</div>
+						</div>
+						<br/>
+						<div class="ui blue button" ng-show="!editing[2]" ng-click="editing[2]=!editing[2]">
+							<i class="edit icon"></i>
+							Edit info
+						</div>
+						<button type="button" class="ui green button" ng-show="editing[2]">
+							<i class="check icon"></i>
+							Save
+						</button>
+						<div class="ui red button" ng-show="editing[2]" ng-click="editing[2]=!editing[2]">
+							<i class="x icon"></i>
+							Cancel
+						</div>
+					</form>
+					<form class = "ui error form" ng-submit="updateDetails(details)" ng-if="position=='Analyst'" novalidate>
+						<div class="ui error message" ng-if="positionErrors[0]">
+					    	<div class="header">Error Saving</div>
+					   	 	<p>There are some errors in your edit, please see red error messages for info</p>
+					  	</div>
+						<h3 class = "ui top attached segment">{{ position }} details</h3>
+						<div class="ui attached segment form">
+							<div class="field">
+								<label>Sectors:</label>
+							    <span ng-repeat="x in sectors"> <input type="checkbox" ng-disabled="!editing[2]" ng-model="details[x.mName]"> {{ x.name }} <br/></span>
+							</div>
+						</div>
+						<br/>
+						<div class="ui blue button" ng-show="!editing[2]" ng-click="editing[2]=!editing[2]">
+							<i class="edit icon"></i>
+							Edit info
+						</div>
+						<button type="button" class="ui green button" ng-show="editing[2]">
+							<i class="check icon"></i>
+							Save
+						</button>
+						<div class="ui red button" ng-show="editing[2]" ng-click="editing[2]=!editing[2]">
+							<i class="x icon"></i>
+							Cancel
+						</div>
+					</form>
+					<form class = "ui form" ng-if="position=='Team Assistant'" novalidate>
+						<h3 class = "ui top attached segment">{{ position }} details</h3>
+						<div class="ui attached segment form">
+							<label>Edit Team Members:</label>
+							<div class="ui divided list">
+							    <div class="item" ng-repeat="x in contacts"> <a ui-sref="investorProfile({ param1: x.id })"><i class="edit icon"></i><b>{{x.position}}:</b> {{x.firstname}} {{x.surname}}</a></div>
+							</div>
+						</div>
+						<br/>
+					</form>
+					</div>
+				</div>
+				<div class="ui one column row">
+					<div class="ui center aligned column">
+						<h2 class="ui top attached header">
+						  <span ng-show="contact.id==currentUser.userId">My</span>
+						  <span ng-hide="contact.id==currentUser.userId">{{contact.firstname}}'s</span>
+						  Tags
+						</h2>
+						<div class="ui attached segment">
+						  	<div ng-repeat="x in tags" class="ui button label tagButton" ng-class="x.boolean && 'blue' || ''" ng-click="addTag(x)">{{x.name}}</div>&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+		</br>
+			<a class="ui blue button" ui-sref="addUser">
+				<i class="plus icon"></i>
+				Add member
+			</a>
+		</div>
+	</div>
+</div>
+<div class="ui page centered grid" ng-show="failedLoading">
+	<div class="ui row">
+	</div>
+	<div class="ui row">
+		<div class="ui center aligned column">
+			<h2 class="ui top attached header">
+			  Error Loading
+			</h2>
+			<div class="ui attached segment">
+			  <p>Please refresh or sign in again</p>
+			</div>
+		</div>
+	</div>
+</div>

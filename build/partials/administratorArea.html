@@ -1,0 +1,55 @@
+<div ng-controller="messagesController as msgCtrl" class="container">
+  <div class="page grid">
+    <div class="ui segment ">
+      <div class="ui three column top aligned grid messagesContainer">
+        <div class="left aligned two wide column"></div>
+        <div class="left aligned three wide column messagesContactsList">
+          <div class="blue ui labeled">
+            <h4 class="ui header"><a id="image" class="anchor"><i class="icon mail"></i> Friends:</a></h4>
+            <div class="ui list">
+              <div ng-click="setSelectedFriend(friend.id)" ng-repeat="friend in friends" class="item message greyRibbon">
+                <div >
+                  <img  class="ui avatar image" src="http://www.nachwelt.eu/uploads/tx_nwkunden/avatar-male.jpg">
+                  <div class="content">
+                    <a class="header">{{friend.firstname + " " + friend.surname}}</a>
+                    <div class="description">Online</b></a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="messageInterfaceContainer" class="left aligned eight wide column messageList" >
+          <div class="messagesContainerHeader" ><a class="author">{{ selectedFriend.firstname + " " + selectedFriend.surname }}</a></div>
+          <div id="messagesToContainer" class="ui comments" >
+            <div ng-repeat="message in messages" class="comment">
+              <a class="avatar">
+                <img src="http://www.nachwelt.eu/uploads/tx_nwkunden/avatar-male.jpg">
+              </a>
+              <div class="content">
+                <a ng-hide="isMe(message.posted_by)" class="author">{{ selectedFriend.firstname + " " + selectedFriend.surname }}</a>
+                <a ng-show="isMe(message.posted_by)" class="author">You</a>
+                <div class="metadata">
+                  <span class="date">{{message.created_at | date:'shortTime'}} {{message.created_at | date:'fullDate'}} </span>
+                </div>
+                <div class="text">
+                  {{message.content}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="sendmessage" >
+            <form class="ui reply form">
+              <div id="sendmessage" class="field">
+                <textarea ng-keypress="checkSent($event)" ng-model="message" class="textArea" rows="1" cols="1" placeholder="Enter your message here..."></textarea>
+              </div>
+              <div ng-click="sendMessage(message)" id="sendmessage" class="ui blue labeled submit icon button">
+                <i class="icon edit"></i> Add Reply
+              </div>
+            </form>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

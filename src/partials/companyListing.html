@@ -1,0 +1,92 @@
+<div class="ui page centered grid" ng-controller="companyListingController">
+	<div class="row">
+		<div class="center aligned column">
+			<h1 class="ui dividing header">Companies of Interest</h1>
+			<p>I would like to receive a meeting invitation from the following companies on their next local roadshow</p>
+		</div>
+	</div>
+	<div class="ui divided grid segment" ng-show= "allCompanies.length>0 && !failedToLoad && favouritesLoaded">
+		<div class="aligned five wide column">
+			<div class="grid ui">
+				<div class="column" ng-class="{true: 'three wide', false: 'four'}[searchSize]">
+				<div class="ui icon fluid input">
+				  <input placeholder="Search name or symbol..." type="text" ng-model="search.$" ng-change="addAll(false)" name="search_box" ng-focus="searchSize=false" ng-blur="searchSize=true">
+				  <i class="search icon"></i>
+				</div>
+			</div>
+			</div>
+			</br>
+			<!--<div class="row">
+				<div class="ui button" ng-class="added[0] && 'blue' || ''" ng-click="addAll(true)">All</div>
+			</div>
+			</br>-->
+			<div class="row">
+				<div class="ui button" ng-class="added[1] && 'blue' || ''" ng-click="addCategory(1, 'FTSE100')">FTSE 100</div>
+			</div>
+			</br>
+			<div class="row">
+				<div class="ui button" ng-class="added[2] && 'blue' || ''" ng-click="addCategory(2, 'FTSE250')">FTSE 250</div>
+			</div>
+			</br>
+			<div class="row">
+				<div class="ui button" ng-class="added[3] && 'blue' || ''" ng-click="addCategory(3, 'FTSE Smallcap')">FTSE Smallcap</div>
+			</div>
+			</br>
+			<div class="row">
+				<div class="ui button" ng-class="added[4] && 'blue' || ''" ng-click="addCategory(4, 'FTSE Fledgling')">FTSE Fledgling</div>
+			</div>
+			</br>
+			<div class="row">
+				<div class="ui button" ng-class="added[5] && 'blue' || ''" ng-click="addCategory(5, 'FTSE AIM All Share')">FTSE AIM All Share</div>
+			</div>
+			</br>
+			<!--<div class="row">
+				<div class="ui button" ng-class="added[6] && 'blue' || ''" ng-click="addCategory(6, 'Uncategorised')">Uncategorised</div>
+			</div>-->
+			</br>
+		</div>
+
+		<div class="ui five wide column">
+			<b> Companies </b></br>
+			<div class="ui right aligned column">
+				<div class="companyListScroll">
+					<div class="ui checkAll">Check all <input ng-change="checkAll(checkResults, companies, results)" class="ui checkbox" ng-model = "checkResults" type="checkbox"/></div>
+					<div ng-click="companies[x.name]=!companies[x.name]" ng-repeat="x in results | filter:searchBoth" class="ui blue inverted right aligned segment clickable">
+						{{x.name}} ({{x.symbol}}) <input ng-click="companies[x.name]=!companies[x.name]" class="ui checkbox" ng-model = "companies[x.name]"type="checkbox"/>
+					</div>
+				</div></br>
+				<div ng-click="favourite()" class="ui green button"> Add </div>
+			</div>
+		</div>
+
+		
+		<div class="ui five wide column">
+			<div class="ui five wide column click">
+				<b> My List </b></br>
+				<div class="ui right aligned column">
+					<div class="companyListScroll">
+						<div class="ui checkAll">Check All <input ng-change="checkAll(checkFavourites, favourited, favourites)" class="ui checkbox" ng-model = "checkFavourites" type="checkbox"/></div>
+						<div ng-click="favourited[x.name]=!favourited[x.name]" ng-repeat="x in favourites" class="ui blue inverted right aligned segment clickable">
+							{{x.name}} ({{x.symbol}}) <input ng-click="favourited[x.name]=!favourited[x.name]" class="ui checkbox" ng-model = "favourited[x.name]" type="checkbox"/>
+						</div>
+					</div></br>
+					<div ng-click="unFavourite()" class="ui red button"> Remove </div></br>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="grid ui segment" ng-if= "allCompanies.length==0 && !failedToLoad">
+		<div class="ui row">
+			<div class="ui center aligned column">
+				<span>Loading Companies...</span>
+			</div>
+		</div>
+	</div>
+	<div class="grid ui segment" ng-if= "allCompanies.length==0 && failedToLoad">
+		<div class="ui row">
+			<div class="ui center aligned column">
+				<span>Failed to load companies, please refresh or try again later.</span>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<div class="ui large menu">
+  <a class="active item">
+    <i class="home icon"></i> Home
+  </a>
+  <a class="item">
+    <i class="content icon"></i> Dashboard
+  </a>
+    <a class="item" ui-sref="companyDashboard">
+    <i class="building icon"></i> List
+  </a>
+  <div class="right menu">
+    <div class="item">
+      <div class="ui icon input">
+        <input type="text" placeholder="Search...">
+        <i class="search link icon"></i>
+      </div>
+    </div>
+    <a class="item">
+      <i class="mail icon"></i>
+    </a>
+    <a class="item">
+      <i class="settings icon"></i>
+    </a>
+    <div class="item">
+        <div class="ui primary button" ui-sref="login">Sign In</div>
+    </div>
+  </div>
+</div>

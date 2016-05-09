@@ -1,0 +1,39 @@
+<div class="ui large menu blueBottomRibbon">
+  <a class="item" ui-sref="home">
+    <i class="home icon"></i> Home
+  </a>
+  <a class="item" ui-sref="dashboard">
+    <i class="content icon"></i> Dashboard
+  </a>
+  <a class="item" ui-sref="list" ng-show="currentUser.investor">
+    <i class="building icon"></i> List
+  </a>
+  <a class="item" ui-sref="companyProfile" ng-hide="currentUser.investor">
+    <i class="users icon"></i> Profile
+  </a>
+  <a class="item" ui-sref="investorProfile({ param1: null })" ng-show="currentUser.investor">
+    <i class="users icon"></i> My Profile
+  </a>
+  <a class="item" ui-sref="tagSearch" ng-hide="currentUser.investor">
+    <i class="tags icon"></i> Tag search
+  </a>
+
+  <div class="right menu">
+    <div class="item">
+      <div class="ui icon input">
+        <input type="text" placeholder="Search...">
+        <i class="search link icon"></i>
+      </div>
+    </div>
+    <a class="item" ui-sref="messages">
+      <i class="mail icon"></i>
+    </a>
+    <a class="item" ui-sref="companiesAdministratorArea">
+      <i class="settings icon"></i>
+    </a>
+    <div class="item">
+        <div class="ui primary button" ui-sref="home" ng-hide="currentUser.userId">Sign In</div>
+        <div class="ui primary button" controller="applicationController" ng-click="LogOut()" ng-show="currentUser.userId">Log out</div>
+    </div>
+  </div>
+</div>

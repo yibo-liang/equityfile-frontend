@@ -1,0 +1,69 @@
+<div class="ui page centered grid" ng-controller="tagSearchController">
+	<div class="row">
+		<div class="center aligned column">
+			<h1 class="ui dividing header">Search by tags</h1>
+			<p>Match with investors you wish to have a meeting with</p>
+		</div>
+	</div>
+	<div class="ui divided grid segment" ng-show= "!failedToLoad && loaded">
+		<div class="aligned five wide column">
+			<div class="grid ui">
+				<div class="column">
+				<div class="ui icon input">
+				  <input placeholder="Search for investors..." type="text" ng-model="search.$" ng-change="addAll(false)" name="search_box" ng-focus="searchSize=false" ng-blur="searchSize=true">
+				  <i class="search icon"></i>
+				</div>
+			</div>
+			</div>
+			</br>
+			<!--<div class="row">
+				<div class="ui button" ng-class="added[0] && 'blue' || ''" ng-click="addAll(true)">All</div>
+			</div>
+			</br>-->
+			<div ng-repeat="x in tags" class="ui button label tagButton" ng-class="x.boolean && 'blue' || ''" ng-click="filterTag(x)">{{x.name}}</div>
+			</br>
+			<!--<div class="row">
+				<div class="ui button" ng-class="added[6] && 'blue' || ''" ng-click="addCategory(6, 'Uncategorised')">Uncategorised</div>
+			</div>-->
+			</br>
+		</div>
+
+		<div class="ui five wide column">
+			<b> Investors </b></br></br>
+			<div class="ui right aligned column">
+				<div class="companyListScroll">
+					<div ng-repeat="x in results | filter:tagFilter | filter:search track by $index" class="ui blue inverted right aligned segment clickable" ng-click="match(x, $index)">
+						{{x.firstname}} {{x.surname}} ({{x.company}})<input ng-click="match(x, $index)" class="ui checkbox" ng-model = "x.boolean" type="checkbox"/>
+					</div>
+				</div></br>
+				<div ng-click="save()" class="ui green button"> Add </div>
+			</div>
+		</div>
+
+		<div class="ui five wide column">
+			<b> My Focus List </b></br></br>
+			<div class="ui right aligned column">
+				<div class="companyListScroll">
+					<div ng-click="unMatch(x, $index)" ng-repeat="x in matched | filter:searchBoth" class="ui blue inverted right aligned segment clickable">
+						{{x.firstname}} {{x.surname}} ({{x.company}}) <input ng-click="unMatch(x, $index)" class="ui checkbox" ng-model = "x.boolean" type="checkbox"/>
+					</div>
+				</div></br>
+				<div ng-click="remove()" class="ui red button"> Remove </div>
+			</div>
+		</div>
+	</div>
+	<div class="grid ui segment">
+		<div class="ui row" ng-if= "!loaded && !failedToLoad">
+			<div class="ui center aligned column">
+				<span>Loading...</span>
+			</div>
+		</div>
+	</div>
+	<div class="grid ui segment" ng-if= "!loaded && failedToLoad">
+		<div class="ui row">
+			<div class="ui center aligned column">
+				<span>Failed to load, please refresh or try again later.</span>
+			</div>
+		</div>
+	</div>
+</div>

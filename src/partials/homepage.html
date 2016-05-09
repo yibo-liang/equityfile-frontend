@@ -1,0 +1,65 @@
+<div class="container" ng-controller="loginController">
+  <div class="page grid">
+    <div class="ui grid">
+    </br>
+      <h1 class="ui header">
+        <div class="center aligned ui column">
+            <img class="loginPageLogo" src="/images/logo-e.svg" alt="equityfile">
+            <img class="loginPageLogo" src="/images/logo-equityfile.svg">
+            <div class="sub header">Direct connection for investors and companies</div>
+        </div>
+      </h1>
+    </div>
+    </br>
+    <div class="ui segment">
+      <div class="ui two column middle aligned relaxed fitted stackable grid">
+        <div class="center aligned column">
+          <form name="loginForm" ng-controller="loginController" ng-submit="login(user)" novalidate class="ui form">
+            <h1 class="ui header">Sign In</h1>
+            <div ng-if="error">{{error}}</div>
+            <div class="ui left aligned grid">
+              <div class="ui column">
+                <div class="field">
+                  <label>E-mail</label>
+                  <div class="ui left icon input">
+                    <input placeholder="E-mail address" type="email" ng-model="user.email" name="credentials_email" required="">
+                    <i class="mail icon"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui left aligned grid">
+              <div class="ui column">
+                <div class="field">
+                  <label>Password</label>
+                  <div class="ui left icon input">
+                    <input placeholder="Password" type="password" ng-model="user.password" name="credentials_pass" required="" >
+                    <i class="lock icon"></i>
+                  </div>
+                   <a ui-sref="forgotPassword">Forgotten Password?</a>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="ui big blue button">Sign in</button>
+          </form>
+        </div>
+        <div class="ui vertical divider">
+          Or
+        </div>
+        <div class="center aligned column">
+          <h1 class="ui header">New Registration</h1>
+          <div class="huge blue ui labeled icon button" ui-sref="registration">
+            <i class="signup icon"></i>
+            Professional Investor
+          </div>
+          <div class="ui horizontal divider">
+          </div>
+          <div class="huge green ui labeled icon button" ui-sref="registrationCompany">
+            <i class="signup icon"></i>
+            Company
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

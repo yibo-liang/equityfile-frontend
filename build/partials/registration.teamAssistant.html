@@ -1,0 +1,132 @@
+<h4 class="ui dividing header">Team Assistant Details*</h4>
+<div class="two fields">
+  <div class="field">
+    <label>Team Member One:</label>
+    <input name="first_name" ng-model="registration.teamAssistant.oneFirstName" placeholder="First Name..." type="text">
+  </div>
+  <div class="field">
+    <label>&nbsp;</label>
+    <input name="last_name" ng-model="registration.teamAssistant.oneLastName" placeholder="Last Name..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+    <input name="email_address" type="email" ng-model="registration.teamAssistant.oneEmail" placeholder="E-mail Address..." type="text"></br>
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+        <label>&nbsp;</label>
+        <select ng-model="registration.teamAssistant.onePosition" ng-options="position.title for position in positions">
+          <option value="">Select Position...</option>
+        </select>
+        <label>&nbsp;</label>
+  </div>
+</div>
+<div class="two fields">
+  <div class="field">
+    <label>Team Member Two:</label>
+    <input name="first_name" ng-model="registration.teamAssistant.twoFirstName" placeholder="First Name..." type="text">
+  </div>
+  <div class="field">
+    <label>&nbsp;</label>
+    <input name="last_name" ng-model="registration.teamAssistant.twoLastName" placeholder="Last Name..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+    <input name="email_address" type="email" ng-model="registration.teamAssistant.twoEmail" placeholder="E-mail Address..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+        <label>&nbsp;</label>
+        <select ng-model="registration.teamAssistant.twoPosition" ng-options="position.title for position in positions">
+          <option value="">Select Position...</option>
+        </select>
+        <label>&nbsp;</label>
+  </div>
+</div>
+<div ng-show="membersThree">
+<div class="two fields">
+  <div class="field">
+    <label>Team Member Three:</label>
+    <input name="first_name" ng-model="registration.teamAssistant.thirdFirstName" placeholder="First Name..." type="text">
+  </div>
+  <div class="field">
+    <label>&nbsp;</label>
+    <input name="last_name" ng-model="registration.teamAssistant.thirdLastName" placeholder="Last Name..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+    <input name="email_address" type="email" ng-model="registration.teamAssistant.thirdEmail" placeholder="E-mail Address..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+        <label>&nbsp;</label>
+        <select ng-model="registration.teamAssistant.thirdPosition" ng-options="position.title for position in positions">
+          <option value="">Select Position...</option>
+        </select>
+        <label>&nbsp;</label>
+  </div>
+</div>
+</div>
+<div ng-show="membersFour">
+<div class="two fields" ng-show="membersFour">
+  <div class="field">
+    <label>Team Member Four:</label>
+    <input name="first_name" ng-model="registration.teamAssistant.fourFirstName" placeholder="First Name..." type="text">
+  </div>
+  <div class="field">
+    <label>&nbsp;</label>
+    <input name="last_name" ng-model="registration.teamAssistant.fourLastName" placeholder="Last Name..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+    <input name="email_address" type="email" ng-model="registration.teamAssistant.fourEmail" placeholder="E-mail Address..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+        <label>&nbsp;</label>
+        <select ng-model="registration.teamAssistant.fourPosition" ng-options="position.title for position in positions">
+          <option value="">Select Position...</option>
+        </select>
+        <label>&nbsp;</label>
+  </div>
+</div>
+</div>
+<div ng-show="membersFive">
+<div class="two fields" ng-show="membersFive">
+  <div class="field">
+    <label>Team Member Five:</label>
+    <input name="first_name" ng-model="registration.teamAssistant.fiveFirstname" placeholder="First Name..." type="text">
+  </div>
+  <div class="field">
+    <label>&nbsp;</label>
+    <input name="last_name" ng-model="registration.teamAssistant.fiveLastName" placeholder="Last Name..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+    <input name="email_address" type="email" ng-model="registration.teamAssistant.fiveEmail" placeholder="E-mail Address..." type="text">
+  </div>
+</div>
+<div class="two fields">
+  <div class="field ten wide">
+        <label>&nbsp;</label>
+        <select ng-model="registration.teamAssistant.fivePosition" ng-options="position.title for position in positions">
+          <option value="">Select Position...</option>
+        </select>
+        <label>&nbsp;</label>
+  </div>
+</div>
+</div>
+<div ng-click="addMember()" ng-class="addButtonStatus" class="ui button six wide">Add Member</div>
+<div ng-click="removeMember()" ng-class="removeButtonStatus" class="ui button six wide">Remove Member</div>
+</div>
+<br>
+<br>

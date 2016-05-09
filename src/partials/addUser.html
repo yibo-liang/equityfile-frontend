@@ -1,0 +1,46 @@
+<div class="ui centered grid" ng-controller="addUserController">
+	<div class="seven wide column">
+		<form ng-submit="register(registration.user)"  name="registrationForm" ng-controller="addUserController" class="ui error form" novalidate>
+			<h1>Add member</h1>
+				<div class="ui error message" ng-show="errors[0]">
+				    <div class="header">Please correct your application</div>
+				    <p>(see red messages)</br>
+				    {{errorMessage}}</p>
+				 </div>
+				<h4 class="ui dividing header">Account Information</h4>
+				<div>
+					<div class="two fields">
+							<div ng-class="errors[1] && 'error' || ''" class="field">
+								<label>Name:</label>
+								<input name="first_name" ng-model="registration.user.firstname" placeholder="First Name..." type="text" required>
+								<span class = "redError" ng-show="errors[1] || errors[2]">First & Last name is required or is currently invalid</span>
+							</div>
+							<div ng-class="errors[2] && 'error' || ''" class="field">
+								<label>&nbsp;</label>
+								<input name="last_name" ng-model="registration.user.surname" placeholder="Last Name..." type="text" required>
+							</div>
+					</div>
+				</div>
+				<div ng-class="(errors[3] || emailTaken) && 'error' || ''" class="field ten wide">
+					<label>E-mail Address:</label>
+					<input name="email_address" type="email" ng-model-options="{ debounce: 250 }" ng-model="registration.user.email" placeholder="E-mail Address..." type="text" required>
+					  <span class = "redError" ng-show="errors[3]">Email is required or is currently invalid</span>
+					  <span class = "redError" ng-show="emailTaken">E-mail is taken</span>
+				</div>
+				<div ng-if="currentUser.investor" ng-class="errors[4] && 'error' || ''" class="field ten wide">
+	      			<label>Position:</label>
+					<select name="job_position" ng-model="registration.user.position" ng-options="position.title for position in positions" required>
+						<option value="">Select Position...</option>
+			 		</select>
+			 		<span class = "redError" ng-show="errors[5]">Please select a position</span>
+				</div>
+				<div ng-if="!currentUser.investor" ng-class="errors[4] && 'error' || ''" class="field ten wide">
+	      			<label>Position:</label>
+					<input name="job_position" ng-model="registration.user.position" placeholder="Position..." type="text" required>
+			 		<span class = "redError" ng-show="errors[5]">Please select a position</span>
+				</div>
+				<div ui-view></div>
+				<button type="submit" class="huge blue ui centered button">Submit</button>
+		</form>
+	</div>
+</div>

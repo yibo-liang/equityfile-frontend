@@ -1,0 +1,85 @@
+<div class="ui centered grid" ng-controller="registrationCompanyController">
+<div class="ui centered grid" ng-controller="registrationCompanyController">
+	<div class="seven wide column">
+		<form ng-submit="register(registration)"  name="registrationForm" ng-controller="registrationCompanyController" class="ui error form" novalidate>
+			<h1>Registration</h1>
+				<div class="ui error message" ng-show="errors[0]">
+				    <div class="header">Please correct your application</div>
+				    <p>(see red messages)</br>
+				    {{errorMessage}}</p>
+				 </div>
+				<h4 class="ui dividing header">Account Information</h4>
+				<div>
+					<div class="two fields">
+							<div ng-class="errors[1] && 'error' || ''" class="field">
+								<label>Name:</label>
+								<input name="first_name" ng-model="registration.user.firstname" placeholder="First Name..." type="text" required>
+								<span class = "redError" ng-show="errors[1] || errors[2]">First & Last name is required or is currently invalid</span>
+							</div>
+							<div ng-class="errors[2] && 'error' || ''" class="field">
+								<label>&nbsp;</label>
+								<input name="last_name" ng-model="registration.user.surname" placeholder="Last Name..." type="text" required>
+							</div>
+					</div>
+				</div>
+				<div ng-class="(errors[3] || emailTaken) && 'error' || ''" class="field ten wide">
+					<label>E-mail Address:</label>
+					<input name="email_address" type="email" ng-model-options="{ debounce: 250 }" ng-model="registration.user.email" placeholder="E-mail Address..." type="text" required>
+					  <span class = "redError" ng-show="errors[3]">Email is required or is currently invalid</span>
+					  <span class = "redError" ng-show="emailTaken">E-mail is taken</span>
+				</div>
+				<div ng-class="errors[12] && 'error' || ''" class="field ten wide">
+					<label>Contact Number:</label>
+					<input name="contact_number" type="text" ng-model="registration.user.telephone" placeholder="Contact Number..." type="text" required>
+					  <span class = "redError" ng-show="errors[12]">Contact number is invalid or required</span>
+				</div>
+				<div ng-class="errors[5] && 'error' || ''" class="field ten wide">
+	      			<label>Position:</label>
+					<input name="job_position" type="text" ng-model="registration.user.position" placeholder="Position..." required>
+			 		<span class = "redError" ng-show="errors[5]">Position is required</span>
+				</div>
+				<h4 class="ui dividing header">Company Information</h4>
+				<div ng-class="(errors[7] || companyTaken) && 'error' || ''" class="field ten wide">
+					<label>Company Name:</label>
+						<input name="company_name" ng-model="registration.company.name" placeholder="Company Name..." type="text" required>
+						<span class = "redError" ng-show="errors[7]">Company name is required.</span>
+					</br>
+					<div ng-show="filteredCompanies.length > 0">
+						Suggestions:
+						<div class="suggestionsScroll">
+							<div class="suggestionEntry" ng-repeat="x in filteredCompanies = (companies | filter: searchBoth)">
+								<div class="ui tiny blue button right clickable" ng-click="fillName(x)" ng-class="(registration.company.name==x.name) && 'green' || 'blue'">
+									{{x.name}} ({{x.symbol}})
+								</div></br>
+							</div>
+							<span ng-hide="companies"> Loading... </span>
+						</div>
+					</div>
+				</div>
+				<div id="locationField" ng-class="errors[8] && 'error' || ''" class="field">
+				  <label>Company Address:</label>
+				  <input class="ui input" id="autocomplete" ng-keydown = "repositionSuggestions()" ng-focus="repositionSuggestions()" placeholder="Enter your address" type="text" ng-model="autocomplete"></input>
+				  <span class = "redError" ng-show="errors[8]">Please enter a valid address</span>
+				</div>
+				<div class="suggestionTest" id="suggestions"></div>
+				<div class="ui segment">
+					<div class="field">
+						<input name="company_address_line_1" ng-model="registration.company.address.line1" placeholder="Address..." type="text" required readonly>
+					</div>
+					<div class="field">
+						<input name="company_city" ng-model="registration.company.address.city" placeholder="City..." type="text" required readonly>
+					</div>
+					<div class="field five wide">
+						<input name="company_post_code" ng-model="registration.company.address.postcode" placeholder="Post Code..." type="text" required readonly>
+					</div>
+					<div class="field eight wide">
+						 <select ng-init="registration.company.address.country = countries[185]" name="company_country" ng-model="registration.company.address.country" ng-options="country.country for country in countries" required disabled>
+						 	<option value="">Select Country...</option>
+						 </select>
+					</div>
+				</div>
+				<div ui-view></div>
+				<button type="submit" class="huge blue ui centered button">Submit</button>
+		</form>
+	</div>
+</div>

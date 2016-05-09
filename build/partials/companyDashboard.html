@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="page grid">
+    <div class="ui segment">
+      <div class="ui two column middle aligned relaxed fitted stackable grid">
+        <div class="center aligned column">
+          <div class="huge blue ui labeled icon button">
+            <i class="signup icon"></i>
+            Institute Investor
+          </div>
+        </div>
+        <div class="ui vertical divider">
+          Or
+        </div>
+        <div class="center aligned column">
+          <div class="huge green ui labeled icon button">
+            <i class="signup icon"></i>
+            Company
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="currentUser" class="ui center aligned segment">
+      <div class="ui column middle aligned">
+        Welcome, {{ currentUser.firstname }}</br>
+        your email address is, {{ currentUser.email }}
+      </div>
+    </div>
+  </div>
+</div>

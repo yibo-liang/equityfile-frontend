@@ -1,0 +1,40 @@
+<tr id="currentCompany">
+ <td class="currentCompanyInformation" colspan="5"><div class="column wide">
+   <form class = "ui error form" ng-submit="updateCompany(company)" novalidate>
+     <div class="ui error message" ng-if="companyErrors[0]">
+       <div class="header">Error Saving</div>
+       <p>There are some errors in your edit, please see red error messages for info</p>
+     </div>
+     <h3 class="ui top attached segment">Company Info</h3>
+     <div class="ui attached segment form">
+       <div class="inline field">
+         <label>Name:</label>
+         <input class="ui small input" type="text" ng-model="currentCompany.name" value="getCompany(companyid).name" placeholder="Name" readonly></input>
+       </div>
+       <div class="inline field">
+         <label>Symbol:</label>
+         <input type="text" placeholder="Stock Symbol" ng-model="currentCompany.symbol" value="getCompany(companyid).symbol" ng-readonly="!editing[0]"></input>
+       </div>
+       <div ng-class="companyErrors[1] && 'error' || ''" class="field">
+         <label>Address:</label>
+         <input type="text" placeholder="Address Line 1" ng-model="currentCompany.address_line_1" value="getCompany(companyid).address_line_1" ng-readonly="!editing[0]"></input>
+         <span class = "redError" ng-show="companyErrors[1]">Address Line 1 is required or is currently invalid</span>
+          <input type="text" placeholder="Address Line 2" ng-model="currentCompany.address_line_2" value="getCompany(companyid).address_line_2" ng-show="company.address_line_2 != null  || editing[0]" ng-readonly="!editing[0]"></input>
+          <input type="text" placeholder="Address Line 3" ng-model="currentCompany.address_line_3" value="getCompany(companyid).address_line_3" ng-show="company.address_line_3 != null || editing[0]" ng-readonly="!editing[0]"></input>
+       </div>
+       <div ng-class="companyErrors[2] && 'error' || ''" class="inline field">
+         <label>Postcode:</label>
+         <input type="text" placeholder="Postcode" ng-model="currentCompany.postcode" value="getCompany(companyid).postcode" ng-readonly="!editing[0]"></input>
+         <span class = "redError" ng-show="companyErrors[2]">Postcode is required or is currently invalid</span>
+       </div>
+   </div>
+   <br/>
+   <button type="submit" class="ui green button" ng-click="updateCompany(currentCompany)" ng-show="editing[0]">
+     <i class="check icon"></i>Save
+   </button>
+   <button class="ui red button" ng-show="editing[0]" ng-click="hideCompanyInfo()" >
+     <i class="x icon"></i>Cancel
+   </button>
+   </form>
+ </div></td>
+</tr>

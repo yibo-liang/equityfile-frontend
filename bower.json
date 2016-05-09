@@ -1,0 +1,21 @@
+{
+  "name": "equityFileFrontend",
+  "version": "0.0.0",
+  "homepage": "N/A",
+  "authors": [
+    "Grant Leadbetter <grant@nespite.io>"
+  ],
+  "main": "index.html",
+  "license": "N/A",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap-calendar": "~0.10.6",
+    "moment": "~2.10.3"
+  }
+}

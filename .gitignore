@@ -1,0 +1,18 @@
+*.swp
+*~
+.project
+.DS_Store
+.idea
+
+bower_components
+node_modules
+npm-debug.log
+.sass-cache/
+.sass-cache
+<<<<<<< HEAD
+dist
+=======
+dist
+
+gulpfile.js
+>>>>>>> Removed commented factory, commented out buttons that do nothing currently, changed buttons to be more accurate and changed gitignore

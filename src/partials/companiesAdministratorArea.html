@@ -1,0 +1,73 @@
+<div ng-controller="CompaniesAdministratorAreaController as AdmnCtrlr" >
+  <div class="ui relaxed grid">
+    <div class="two wide column">
+      <div class="ui vertical menu compact">
+        <div class="header item">
+          Administration
+        </div>
+        <div class="item">
+          <a class="pointerAdd" ui-sref="companiesAdministratorArea">Companies</a>
+        </div>
+        <div class="item">
+          <a class="pointerAdd" ui-sref="usersAdministratorArea">Users</a>
+        </div>
+      </div>
+    </div>
+    <div class="ten wide column">
+      <div class="ui segment column">
+        <div class="ui left icon input">
+          <input ng-model="searchTerm" ng-change="searchCompanies(searchTerm)" placeholder="Search companies..." type="text">
+          <i class="users icon"></i>
+        </div>
+        <button class="ui icon button green" ng-click="newCompany()">
+          <i class="plus icon"></i>
+          <label>Add Company</label>
+        </button>
+        <table class="ui blue sortable celled table">
+          <thead></thead>
+          <tr id="newCompany"></tr>
+        </table>
+        <div>
+        </br>
+          <table class="ui blue sortable celled table">
+            <thead>
+              <tr>
+                <th>ID:</th>
+                <th>Company:</th>
+                <th>Stock Code:</th>
+                <th>Applicant Status:</th>
+                <th>View Info:</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr class="company-loader">
+                <div class="ui active inverted dimmer company-loader">
+                  <div class="ui text loader company-loader">Loading...</div>
+                </div>
+              </tr>
+              <tr ng-repeat="company in companies track by $index " id="{{company.id}}" ng-hide="AdmnCtrlr.noResults">
+                
+                <td>{{ company.id }}</td>
+                <td>{{ company.name }}</td>
+                <td>{{ company.symbol }}</td>
+
+                <td ng-hide="checkApplicantStatus(company.id)" class="negative">Pending Acceptance</td>
+                <td ng-show="checkApplicantStatus(company.id)" class="positive">Accepted</td>
+
+                <td><div class="fluid ui button" ng-click="editCompany(company.id)">Edit</div></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr><th>{{companyCount || 0}} Companies</th>
+              <th>{{acceptedCompanyCount || 0}} Approved</th>
+              <th></th>
+              <th><button class="fluid ui button" ng-click="previousPage()">Return to Beginning</button></th>
+              <th><button class="fluid ui button" ng-click="nextPage()">Next Page</button></th>
+            </tr></tfoot>
+          </table>
+          <!--End of company search table-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

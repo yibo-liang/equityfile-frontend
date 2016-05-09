@@ -1,0 +1,35 @@
+<div class="ui page centered grid" ng-controller="inviteNewMemberController">
+	<div class="ui row">
+	</div>
+	<div class="ui row">
+		<div class="ui center aligned column">
+			<h2 class="ui top attached header">
+			  Invite To Website
+			</h2>
+			<div class="ui attached segment">
+				<form ng-submit="sendInvite(invite)" name="inviteForm" class = "ui error form" novalidate>
+					<div class="ui error message" ng-show="errors[0]">
+					    <div class="header">Please correct your application</div>
+					    <p>(see red messages)</br>
+					    {{errorMessage}}</p>
+				 	</div>
+				  	<div ng-class="errors[1] && 'error' || ''" class="inline field">
+						<label>Email:</label>
+						<input required name="emails" class="ui small input" type="text" ng-model="invite.emails" placeholder="E-mail" ></input></br>
+						<span class = "redError" ng-show="errors[1]">Email is required or is currently invalid</span></br>
+						<span>(You can enter multiple emails seperated by ";")</span>
+					</div>
+					<div ng-class="errors[2] && 'error' || ''" class="inline field">
+						<label>Personalised message:</label>
+						<textarea required name="message" ng-model="invite.message"></textarea>
+						<span class = "redError" ng-show="errors[2]">Message is required</span>
+					</div>
+					<button class="ui blue button">
+						<i class="mail icon"></i>
+						Send
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+<h4 class="ui dividing header">Analyst Specific Details*</h4>
+  <div class="field eight wide">
+    <label>Total Company Assets Under Management:</label>
+    <input name="company_assets" ng-model="registration.analyst.companyAssets" type="text">
+  </div>
+  <div class="field eight wide">
+    <label>Total Equity Assets Under Management:</label>
+    <input name="equity_assets" ng-model="registration.analyst.equityAssets" type="text">
+  </div>
+  <div class="field eight wide">
+    <label>Total UK Equity Assets Under Management:</label>
+    <input name="ukEquity_assets" ng-model="registration.analyst.ukEquityAssets" type="text">
+  </div>
+  <div class="field eight wide">
+    <span ng-repeat="x in sectors"> {{ x.name }}: <input type="checkbox" ng-model="registration.analyst.industries[x.mName]"> <br/></span>
+    <label>&nbsp;</label>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+html, body {
+  overflow-x: hidden;
+}
+
+.bottomPage {
+	bottom: 0;
+	position: fixed;
+	width: 100%;
+}
+.centeredElement{
+	text-align: center;
+}
+.boxLook{
+	background-color: #FFF;
+	font-size: 8pt;
+
+}
+
+.buttonGroup{
+	padding-top: 50em;
+	border-bottom: 3px solid #3B83C0; 
+}
+
+.blueBottomRibbon{
+	border-bottom: 3px solid #3B83C0; 
+}
+.greyBottomRibbon {
+	border-bottom: 2px solid #dadada;
+}
+.greyRibbon {
+	border-left: 2px solid #3B83C0;
+	border-bottom: 2px solid #dadada;
+}
+.redError{
+	color: #912D2B; 
+}
+.messagesContainer{
+	min-height: 100%;
+}
+.messagesContactsList{
+	border-right: 2px solid #a0a0a0;
+	height: 50em;
+}
+.messageList {
+	border-right: 5px solid #dadada;
+	height: 100%;
+	overflow-y: scroll;
+}
+.message {
+	padding: 0;
+	padding: 10em;
+}
+.message:hover {
+	cursor: pointer;
+	background: #dadada;
+}
+#messagesToContainer {
+	height: 40em;
+	min-width: 100%;
+	max-height: 40%;
+	overflow-y: scroll;
+}
+#sendmessage {	
+	width: 100%;
+}
+.textArea {
+	height: 5em;
+	min-width: 100%;
+}
+#messageInterfaceContainer {
+	overflow: hidden;
+	width: 100%;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.companyListScroll{
+	overflow-y: auto; 
+	height:30em;
+	overflow-x: hidden;
+}
+
+.clickable:hover {
+   cursor: pointer;
+}
+
+.loginPageLogo {
+   height: 2em;
+}
+
+.checkAll {
+  padding-top: 0.5em;
+  padding-right: 1em;
+}
+
+.ui.button.tagButton {
+	margin: 3px;
+}
+
+#currentCompany{
+	height: 0;
+	text-align: left;
+	
+}
+.pointerAdd {
+	cursor: pointer;
+}.currentCompanyInformation {
+	height: 0;
+	text-align: left;
+	
+}
+.dashboardMap { 
+	height: 30em
+}
+.suggestionsScroll{
+	overflow-y: auto; 
+	height:auto;
+	max-height: 10em;
+	overflow-x: hidden;
+}
+
+.suggestionEntry {
+  padding-bottom: 0.5em;
+}

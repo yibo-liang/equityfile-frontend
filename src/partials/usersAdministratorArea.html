@@ -1,0 +1,83 @@
+<div ng-controller="UsersAdministratorAreaController as AdmnCtrlr" >
+  <div class="ui relaxed grid">
+    <div class="two wide column">
+      <div class="ui vertical menu compact">
+        <div class="header item">
+          Administration
+        </div>
+        <div class="item">
+          <a class="pointerAdd" ui-sref="companiesAdministratorArea">Companies</a>
+        </div>
+        <div class="item">
+          <a class="pointerAdd" ui-sref="usersAdministratorArea">Users</a>
+        </div>
+      </div>
+    </div>
+    <div class="ten wide column">
+      <div class="ui segment column">
+        <div class="ui left icon input">
+          <input ng-model="searchTerm" ng-change="searchUsers(searchTerm)" placeholder="Search users..." type="text">
+          <i class="users icon"></i>
+        </div>
+        <button class="ui icon button green" ng-click="newUser()">
+          <i class="plus icon"></i>
+          <label>Add User</label>
+        </button>
+        <table class="ui blue sortable celled table">
+          <thead></thead>
+          <tr id="newUser"></tr>
+        </table>
+        <div>
+        </br>
+          <!--Table to show resulting users from search or show no users found message-->
+          <div ng-show="AdmnCtrlr.noResults" class="ui">
+            <div class="ui active inverted dimmer">
+              <div class="ui text loader">Loading</div>
+            </div>
+            <p></p>
+          </div>
+          <table class="ui blue sortable celled table">
+            <thead>
+              <tr>
+                <th>ID:</th>
+                <th>User's Name:</th>
+                <th>Email:</th>
+                <th>Address:</th>
+                <th>Applicant Status:</th>
+                <th>View Info:</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr class="user-loader">
+                <div class="ui active inverted dimmer user-loader">
+                  <div class="ui text loader user-loader">Loading...</div>
+                </div>
+              </tr>
+              <tr ng-repeat="user in users track by $index" id="{{user.id}}" ng-hide="AdmnCtrlr.noResults">
+                
+                <td>{{ user.id }}</td>
+                <td>{{ user.firstname + " " + user.surname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.address_line_1 }}<br/>{{ user.city }}<br/>{{ user.country }}<br/>{{ user.postcode }}</td>
+
+                <td ng-hide="checkApplicantStatus(user.id)" class="negative">Pending Acceptance</td>
+                <td ng-show="checkApplicantStatus(user.id)" class="positive">Accepted</td>
+
+                <td><div class="fluid ui button" ng-click="editUser(user.id)">Edit</div></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr><th>{{userCount || 0}} Users</th>
+              <th>{{ acceptedUserCount || 0}} Approved</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr></tfoot>
+          </table>
+          <!--End of user search table-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
